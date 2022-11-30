@@ -2,15 +2,18 @@ import { Button } from '@material-ui/core';
 import {
   Container,
   Titulo,
-  InputContainer
+  InputContainer 
 } from './styles';
 import {
   Input,
   InputLabel,
   InputAdornment 
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
-function Login() {
+function Login({ name, setName, saldo, setSaldo }) {
+  const history = useHistory();
+
   return (
     <Container>
       <Titulo>
@@ -22,6 +25,8 @@ function Login() {
         </InputLabel>
         <Input
           type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </InputContainer>
       <InputContainer>
@@ -30,6 +35,8 @@ function Login() {
         </InputLabel>
         <Input
         type="number"
+        value={saldo}
+        onChange={(e) => setSaldo(e.target.value)}
         startAdornment={
           <InputAdornment position="start">
             R$
@@ -40,6 +47,7 @@ function Login() {
       <Button
         variant="contained"
         color="primary"
+        onClick={() => { history.push('/feira') }}
       >
         Avançar
       </Button>
