@@ -2,55 +2,64 @@ import { Button } from '@material-ui/core';
 import {
   Container,
   Titulo,
-  InputContainer 
+  InputContainer
 } from './styles';
 import {
   Input,
   InputLabel,
-  InputAdornment 
+  InputAdornment
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { UsuarioContext } from 'common/context/Usuario';
 
-function Login({ name, setName, saldo, setSaldo }) {
+function Login() {
   const history = useHistory();
 
   return (
     <Container>
-      <Titulo>
-        Insira o seu nome
-      </Titulo>
-      <InputContainer>
-        <InputLabel>
-          Nome
-        </InputLabel>
-        <Input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </InputContainer>
-      <InputContainer>
-        <InputLabel>
-          Saldo
-        </InputLabel>
-        <Input
-        type="number"
-        value={saldo}
-        onChange={(e) => setSaldo(e.target.value)}
-        startAdornment={
-          <InputAdornment position="start">
-            R$
-          </InputAdornment>
-        }
-      />
-      </InputContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => { history.push('/feira') }}
-      >
-        Avançar
-      </Button>
+      <UsuarioContext.Consumer>
+        {({ nome, setNome, saldo, setSaldo }) => {
+          return (
+            <>
+              <Titulo>
+                Insira o seu nome
+              </Titulo>
+              <InputContainer>
+                <InputLabel>
+                  Nome
+                </InputLabel>
+                <Input
+                  type="text"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                />
+              </InputContainer>
+              <InputContainer>
+                <InputLabel>
+                  Saldo
+                </InputLabel>
+                <Input
+                  type="number"
+                  value={saldo}
+                  onChange={(e) => setSaldo(e.target.value)}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      R$
+                    </InputAdornment>
+                  }
+                />
+              </InputContainer>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => { history.push('/feira') }}
+              >
+                Avançar
+              </Button>
+            </>
+          )
+        }}
+      </UsuarioContext.Consumer>
     </Container>
   )
 };
