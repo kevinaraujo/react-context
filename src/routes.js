@@ -8,19 +8,19 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path='/'>
-                    <UsuarioProvider>
+                <UsuarioProvider>
+                    <Route exact path='/'>
                         <Login />
-                    </UsuarioProvider>
-                </Route>
-                <Route path='/feira'>
-                    <Feira />
-                </Route>
-                <Route path='/carrinho'>
-                    <Carrinho />
-                </Route>
+                    </Route>
+                    <Route path='/feira'>
+                        <Feira />
+                    </Route>
+                    <Route path='/carrinho'>
+                        <Carrinho />
+                    </Route>
+                </UsuarioProvider>
             </Switch>
-        </BrowserRouter>
+        </BrowserRouter >
     )
 }
 
