@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const CarrinhoContext = createContext();
 
@@ -6,17 +6,28 @@ CarrinhoContext.displayName = 'Carrinho';
 
 export const CarrinhoProvider = ({ children }) => {
     const [carrinho, setCarrinho] = useState([]);
+    const [qtdProdutos, setQtdProdutos] = useState(0);
 
     return (
-        <CarrinhoContext.Provider value={{ carrinho, setCarrinho }}>
+        <CarrinhoContext.Provider 
+        value={{ 
+            carrinho, 
+            setCarrinho,
+            qtdProdutos,
+            setQtdProdutos
+        }}>
             {children}
         </CarrinhoContext.Provider>
     )
 }
 
 export const useCarrinhoContext = () => {
-    console.log('result', useContext(CarrinhoContext));
-    const { carrinho, setCarrinho } = useContext(CarrinhoContext);
+    const { 
+        carrinho, 
+        setCarrinho, 
+        qtdProdutos, 
+        setQtdProdutos 
+    } = useContext(CarrinhoContext);
 
     const mudarQtd = (id, qtd) => {
         return carrinho.map(item => {
@@ -51,10 +62,16 @@ export const useCarrinhoContext = () => {
         setCarrinho(mudarQtd(produto.id, -1))
     }
 
+    useEffect(() => {
+        const newQtd = carrinho.reduce((total, item) => total + item.qtd, 0)
+        setQtdProdutos(newQtd);
+    }, [carrinho, setQtdProdutos]);
+
     return {
         carrinho,
         setCarrinho,
         addProduto,
-        removerProduto
+        removerProduto,
+        qtdProdutos
     };
 }
