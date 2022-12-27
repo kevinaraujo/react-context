@@ -23,7 +23,7 @@ export const PagamentoProvider = ({ children }) => {
     }];
 
     const [formaPgto, setFormaPgto] = useState(tiposPgto[0]);
-
+    
     return (
         <PagamentoContext.Provider value={{tiposPgto, formaPgto, setFormaPgto}}>
             { children }
@@ -37,7 +37,7 @@ export const usePagamentoContext = () => {
         formaPgto, 
         setFormaPgto
     } = useContext(PagamentoContext);
-
+    
 
     function mudarFormaPgto(id) {
         const pgtoAtual = tiposPgto.find(item => item.id === id);

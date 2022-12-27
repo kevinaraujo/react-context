@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { usePagamentoContext } from "./Pagamento";
+import { UsuarioContext } from "./Usuario";
 
 export const CarrinhoContext = createContext();
 
@@ -34,6 +36,13 @@ export const useCarrinhoContext = () => {
         setValorTotalCarrinho
     } = useContext(CarrinhoContext);
 
+    const {
+        formaPgto
+    } = usePagamentoContext();
+    
+    const { setSaldo } = useContext(UsuarioContext);
+   
+ 
     const mudarQtd = (id, qtd) => {
         return carrinho.map(item => {
             if (item.id === id) {
@@ -67,6 +76,11 @@ export const useCarrinhoContext = () => {
         setCarrinho(mudarQtd(produto.id, -1))
     }
 
+    const efetuarCompra = () => {
+        setCarrinho([]);
+        setSaldo(saldoAtual => saldoAtual - valorTotalCarrinho);
+    }
+
     useEffect(() => {
         const { novaQtd, novoTotal } = carrinho.reduce((contador, item) => ({
             novaQtd: contador.novaQtd + item.qtd,
@@ -76,8 +90,8 @@ export const useCarrinhoContext = () => {
             novoTotal: 0
         })
         setQtdProdutos(novaQtd);
-        setValorTotalCarrinho(novoTotal);
-    }, [carrinho, setQtdProdutos, ]);
+        setValorTotalCarrinho(novoTotal * (formaPgto ? formaPgto.juros : 1))
+    }, [carrinho, setQtdProdutos, formaPgto]);
 
     return {
         carrinho,
@@ -86,6 +100,7 @@ export const useCarrinhoContext = () => {
         removerProduto,
         qtdProdutos,
         setQtdProdutos,
-        valorTotalCarrinho
+        valorTotalCarrinho,
+        efetuarCompra
     };
 }

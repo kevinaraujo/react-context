@@ -14,16 +14,17 @@ const Router = () => {
                     <Route exact path='/'>
                         <Login />
                     </Route>
-                    <CarrinhoProvider>
-                        <Route path='/feira'>
-                            <Feira />
-                        </Route>
-                        <PagamentoProvider>
+                    <PagamentoProvider>
+                        <CarrinhoProvider>
+                            <Route path='/feira'>
+                                <Feira />
+                            </Route>
                             <Route path='/carrinho'>
                                 <Carrinho />
                             </Route>
-                        </PagamentoProvider>
-                    </CarrinhoProvider>
+                        </CarrinhoProvider>
+                    </PagamentoProvider>
+
                 </UsuarioProvider>
             </Switch>
         </BrowserRouter >

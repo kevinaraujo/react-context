@@ -39,7 +39,7 @@ function Login() {
         <Input
           type="number"
           value={saldo}
-          onChange={(e) => setSaldo(e.target.value)}
+          onChange={(e) => setSaldo(Number(e.target.value))}
           startAdornment={
             <InputAdornment position="start">
               R$
